@@ -55,7 +55,10 @@ class Score:
 
 class Game:
     def __init__(self, rows: int, cols: int):
-        _board: list[list[Tile]] = [[Tile(0)] * rows for _ in range(cols)]
+        self._board: list[list[Tile]] = [[Tile(0)] * rows for _ in range(cols)]
         """Игровое поле"""
-        _score: Score = Score(0)
-        _is_game_over: bool = False
+        self._score: Score = Score(0)
+        self._is_game_over: bool = False
+
+
+game = Game(4, 4)
