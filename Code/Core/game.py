@@ -1,7 +1,7 @@
 import random
 
 
-class Score:
+class Score():
     """Текущий счёт"""
 
     def __init__(self, value: int):
@@ -17,15 +17,18 @@ class Score:
 
     @value.setter
     def value(self, value):
+        self.validate_value(value)
+
+        self._diff = value - self._value
+        self._value = value
+
+    def validate_value(self, value):
         if value < 0:
             raise ValueError("The value of the scored points must be not less than zero.")
         if value % 2 != 0:
             raise ValueError("The value of the scored points must be an even number.")
         if value < self._value:
             raise ValueError("The value of the scored points should not decrease.")
-
-        self._diff = value - self._value
-        self._value = value
 
     @property
     def diff(self) -> int:
@@ -36,7 +39,7 @@ class Tile:
     """Одиночная плитка"""
 
     # Плитка выделена в отдельный класс для возможности дальнейшего расширения. Например, в консольной игре к ней можно
-    # добавить свойство "Цвет", в режиме обучения можно выделять одинаковые плитки, расположенные рядом и т. д.
+    # добавить свойство "Цвет", в режиме обучения можно визуально выделять одинаковые плитки, расположенные рядом и т. д.
 
     def __init__(self, value: int):
         self.value: int = value  # Call value setter
@@ -48,12 +51,16 @@ class Tile:
 
     @value.setter
     def value(self, value):
+        self.validate_value(value)
+
+        self._value = value
+
+    @classmethod
+    def validate_value(self, value):
         if value < 0:
             raise ValueError("The value of the tile must be not less than zero.")
         if value % 2 != 0:
             raise ValueError("The value of the tile must be an even number.")
-
-        self._value = value
 
 
 class Game:
@@ -85,7 +92,7 @@ class Game:
         self._score.value = 0
         self._score.value = 0  # Повторный ноль обнуляет скорость роста счёта
         self._is_game_over = False
-        self._board = [[Tile(0)] * self._rows for _ in range(self._cols)]
+        self._board = [[Tile(0) for _ in range(self._rows)] for _ in range(self._cols)]
 
         self._add_random_tile()  # Добавляем на игровое поле две плитки
         self._add_random_tile()
@@ -104,7 +111,7 @@ class Game:
 
     def _add_random_tile(self) -> bool:
         """Add new tile to the board, if possible"""
-        zero_tiles = [(i, j) for i in range(len(self._board)) for j in range(len(self._board[0])) if self._board[i][j] == 0]
+        zero_tiles: list[tuple] = [(i, j) for i in range(len(self._board)) for j in range(len(self._board[0])) if self._board[i][j].value == 0]
 
         if not zero_tiles:
             return False  # No zero places in the board
