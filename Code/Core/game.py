@@ -2,14 +2,15 @@ import random
 
 
 class Score():
-    """Текущий счёт"""
+    """Current score"""
 
     def __init__(self, value: int):
         self._value: int = value
-        """Величина текущего счёта"""
+        """The value of the current score"""
         self._diff: int = 0
-        """Скорость изменения счёта"""
-        # Может быть полезна при индикации счёта. Высокая скорость изменения -> удачный ход -> поздравление красным цветом
+        """Score change speed"""
+        # Knowledge of the score change speed can be useful when displaying the score to the player.
+        # For example, high change speed -> successful move -> congratulations with red color
 
     @property
     def value(self) -> int:
@@ -36,14 +37,14 @@ class Score():
 
 
 class Tile:
-    """Одиночная плитка"""
+    """Single tile"""
 
-    # Плитка выделена в отдельный класс для возможности дальнейшего расширения. Например, в консольной игре к ней можно
-    # добавить свойство "Цвет", в режиме обучения можно визуально выделять одинаковые плитки, расположенные рядом и т. д.
+    # The tile is separated into a distinct class to allow for further extension. For example, in a console game, it can have a "Color"
+    # property added, in a learning mode, identical tiles located next to each other can be visually highlighted, etc.
 
     def __init__(self, value: int):
         self.value: int = value  # Call value setter
-        """Номинал плитки"""
+        """The value of the current tile"""
 
     @property
     def value(self) -> int:
@@ -73,7 +74,7 @@ class Game:
         self._score: Score = Score(0)
         """Game Score"""
         self._is_game_over: bool = False
-        """Признак невозможности дальнейших ходов"""
+        """Indication of no further possible moves"""
 
     @property
     def board(self) -> list[list[Tile]]:
@@ -88,13 +89,13 @@ class Game:
         return self._is_game_over
 
     def reset(self) -> None:
-        """Инициализация перед началом игры"""
+        """Initialization before the start of the game"""
         self._score.value = 0
-        self._score.value = 0  # Повторный ноль обнуляет скорость роста счёта
+        self._score.value = 0  # Resetting to zero again resets the score change speed
         self._is_game_over = False
         self._board = [[Tile(0) for _ in range(self._rows)] for _ in range(self._cols)]
 
-        self._add_random_tile()  # Добавляем на игровое поле две плитки
+        self._add_random_tile()  # Add two tiles to the game board
         self._add_random_tile()
 
     def move_left(self) -> None:
