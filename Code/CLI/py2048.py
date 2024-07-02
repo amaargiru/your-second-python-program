@@ -1,4 +1,5 @@
 from Core.game import Game
 
-game = Game(4, 4)
+game = Game(rows=3, cols=5)
 game.reset()
+pass

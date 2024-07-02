@@ -1,7 +1,7 @@
 import random
 
 
-class Score():
+class Score:
     """Current score"""
 
     def __init__(self, value: int):
@@ -57,7 +57,7 @@ class Tile:
         self._value = value
 
     @classmethod
-    def validate_value(self, value):
+    def validate_value(cls, value):
         if value < 0:
             raise ValueError("The value of the tile must be not less than zero.")
         if value % 2 != 0:
@@ -93,7 +93,7 @@ class Game:
         self._score.value = 0
         self._score.value = 0  # Resetting to zero again resets the score change speed
         self._is_game_over = False
-        self._board = [[Tile(0) for _ in range(self._rows)] for _ in range(self._cols)]
+        self._board = [[Tile(0) for _ in range(self._cols)] for _ in range(self._rows)]
 
         self._add_random_tile()  # Add two tiles to the game board
         self._add_random_tile()
@@ -112,7 +112,9 @@ class Game:
 
     def _add_random_tile(self) -> bool:
         """Add new tile to the board, if possible"""
-        zero_tiles: list[tuple] = [(i, j) for i in range(len(self._board)) for j in range(len(self._board[0])) if self._board[i][j].value == 0]
+        zero_tiles: list[tuple] = [(i, j) for i in range(len(self._board))
+                                   for j in range(len(self._board[0]))
+                                   if self._board[i][j].value == 0]
 
         if not zero_tiles:
             return False  # No zero places in the board
@@ -127,7 +129,7 @@ class Game:
         for row in range(self._rows):
             for col in range(self._cols):
                 if (self._board[row][col].value == 0
-                        or row > 0 and self.board[row][col].value == self.board[row - 1][col].value
-                        or col > 0 and self.board[row][col].value == self.board[row][col - 1].value):
+                        or row > 0 and self._board[row][col].value == self._board[row - 1][col].value
+                        or col > 0 and self._board[row][col].value == self._board[row][col - 1].value):
                     return True
         return False
