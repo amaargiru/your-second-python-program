@@ -7,7 +7,7 @@ class Score():
     def __init__(self, value: int):
         self._value: int = value
         """The value of the current score"""
-        self._diff: int = 0
+        self._diff: int = value
         """Score change speed"""
         # Knowledge of the score change speed can be useful when displaying the score to the player.
         # For example, high change speed -> successful move -> congratulations with red color
