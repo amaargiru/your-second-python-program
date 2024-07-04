@@ -65,9 +65,9 @@ class Tile:
 
 
 class Game:
-    def __init__(self, rows: int, cols: int):
+    def __init__(self, rows: int, columns: int):
         self._rows = rows
-        self._cols = cols
+        self._columns = columns
 
         self._board: list[list[Tile]] = []
         """Game board"""
@@ -93,22 +93,74 @@ class Game:
         self._score.value = 0
         self._score.value = 0  # Resetting to zero again resets the score change speed
         self._is_game_over = False
-        self._board = [[Tile(0) for _ in range(self._cols)] for _ in range(self._rows)]
+        self._board = [[Tile(0) for _ in range(self._columns)] for _ in range(self._rows)]
 
         self._add_random_tile()  # Add two tiles to the game board
         self._add_random_tile()
 
     def move_left(self) -> None:
-        pass
+        for row in range(len(self._board)):
+            extra_tiles: int = 0
+
+            new_row = [i for i in self._board[row] if i.value != 0]
+            if len(new_row) >= 2:
+                for i in range(len(new_row) - 1):
+                    if new_row[i].value == new_row[i + 1].value:
+                        new_row[i].value *= 2
+                        new_row[i + 1].value = 0
+                        self._score.value += new_row[i].value
+                        extra_tiles += 1
+            self._board[row] = [i for i in new_row if i.value != 0] + [Tile(0)] * (self._columns - len(new_row) + extra_tiles)
 
     def move_right(self) -> None:
-        pass
+        for row in range(len(self._board)):
+            extra_tiles: int = 0
+
+            new_row = [i for i in self._board[row] if i.value != 0]
+            if len(new_row) >= 2:
+                for i in range(len(new_row) - 1, 0, -1):
+                    if new_row[i].value == new_row[i - 1].value:
+                        new_row[i].value *= 2
+                        new_row[i - 1].value = 0
+                        self._score.value += new_row[i].value
+                        extra_tiles += 1
+            self._board[row] = [Tile(0)] * (self._columns - len(new_row) + extra_tiles) + [i for i in new_row if i.value != 0]
 
     def move_up(self) -> None:
-        pass
+        for col in range(self._columns):
+            extra_tiles: int = 0
+
+            new_col = [self._board[row][col] for row in range(len(self._board)) if self._board[row][col].value != 0]
+            if len(new_col) >= 2:
+                for i in range(len(new_col) - 1):
+                    if new_col[i].value == new_col[i + 1].value:
+                        new_col[i].value *= 2
+                        new_col[i + 1].value = 0
+                        self._score.value += new_col[i].value
+                        extra_tiles += 1
+
+            merged_col = [i for i in new_col if i.value != 0] + [Tile(0)] * (len(self._board) - len(new_col) + extra_tiles)
+
+            for row in range(len(self._board)):
+                self._board[row][col] = merged_col[row]
 
     def move_down(self) -> None:
-        pass
+        for col in range(self._columns):
+            extra_tiles: int = 0
+
+            new_col = [self._board[row][col] for row in range(len(self._board)) if self._board[row][col].value != 0]
+            if len(new_col) >= 2:
+                for i in range(len(new_col) - 1, 0, -1):
+                    if new_col[i].value == new_col[i - 1].value:
+                        new_col[i].value *= 2
+                        new_col[i - 1].value = 0
+                        self._score.value += new_col[i].value
+                        extra_tiles += 1
+
+            merged_col = [Tile(0)] * (len(self._board) - len(new_col) + extra_tiles) + [i for i in new_col if i.value != 0]
+
+            for row in range(len(self._board)):
+                self._board[row][col] = merged_col[row]
 
     def _add_random_tile(self) -> bool:
         """Add new tile to the board, if possible"""
@@ -127,7 +179,7 @@ class Game:
 
     def _is_move_possible(self):
         for row in range(self._rows):
-            for col in range(self._cols):
+            for col in range(self._columns):
                 if (self._board[row][col].value == 0
                         or row > 0 and self._board[row][col].value == self._board[row - 1][col].value
                         or col > 0 and self._board[row][col].value == self._board[row][col - 1].value):
