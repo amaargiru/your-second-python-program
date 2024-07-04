@@ -95,9 +95,6 @@ class Game:
         self._is_game_over = False
         self._board = [[Tile(0) for _ in range(self._columns)] for _ in range(self._rows)]
 
-        self._add_random_tile()  # Add two tiles to the game board
-        self._add_random_tile()
-
     def move_left(self) -> None:
         for row in range(len(self._board)):
             extra_tiles: int = 0
@@ -162,7 +159,7 @@ class Game:
             for row in range(len(self._board)):
                 self._board[row][col] = merged_col[row]
 
-    def _add_random_tile(self) -> bool:
+    def add_random_tile(self) -> bool:
         """Add new tile to the board, if possible"""
         zero_tiles: list[tuple] = [(i, j) for i in range(len(self._board))
                                    for j in range(len(self._board[0]))
