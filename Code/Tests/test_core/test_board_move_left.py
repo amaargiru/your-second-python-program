@@ -54,7 +54,7 @@ def test_move_left_merge_tiles_var1(game):
         [0, 0, 0, 0]
     ]
     assert get_board_values(game.board) == expected_board
-    assert game.score == (20, 4)
+    assert game.score == (20, 20)
 
 
 def test_move_left_merge_tiles_var2(game):
@@ -73,7 +73,7 @@ def test_move_left_merge_tiles_var2(game):
         [32, 32, 0, 0]
     ]
     assert get_board_values(game.board) == expected_board
-    assert game.score == (96, 32)
+    assert game.score == (96, 96)
 
 
 def test_move_left_merge_tiles_var3(game):
@@ -92,7 +92,7 @@ def test_move_left_merge_tiles_var3(game):
         [4, 8, 0, 0]
     ]
     assert get_board_values(game.board) == expected_board
-    assert game.score == (36, 8)
+    assert game.score == (36, 36)
 
 
 def test_move_left_merge_tiles_var4(game):
@@ -111,7 +111,7 @@ def test_move_left_merge_tiles_var4(game):
         [32, 32, 0, 0]
     ]
     assert get_board_values(game.board) == expected_board
-    assert game.score == (96, 32)
+    assert game.score == (96, 96)
 
 
 def test_move_left_merge_tiles_var5(game):
@@ -130,7 +130,7 @@ def test_move_left_merge_tiles_var5(game):
         [128, 256, 0, 0]
     ]
     assert get_board_values(game.board) == expected_board
-    assert game.score == (464, 256)
+    assert game.score == (464, 464)
 
 
 def test_move_left_merge_tiles_var6(game):
@@ -149,7 +149,7 @@ def test_move_left_merge_tiles_var6(game):
         [512, 512, 0, 0]
     ]
     assert get_board_values(game.board) == expected_board
-    assert game.score == (1920, 512)
+    assert game.score == (1920, 1920)
 
 
 def test_move_left_no_merge(game):

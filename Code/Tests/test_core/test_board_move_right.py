@@ -12,7 +12,7 @@ def get_board_values(board):
     return [[tile.value for tile in row] for row in board]
 
 
-def test_move_right_simple_merge(game):
+def test_move_right_merge_tiles_var1(game):
     game.reset()
     game._board = [
         [Tile(0), Tile(0), Tile(2), Tile(2)],
@@ -32,10 +32,10 @@ def test_move_right_simple_merge(game):
 
     assert get_board_values(game.board) == expected_board
 
-    assert game.score == (20, 4)
+    assert game.score == (20, 20)
 
 
-def test_move_right_complex_merge_var1(game):
+def test_move_right_merge_tiles_var2(game):
     game.reset()
     game._board = [
         [Tile(2), Tile(4), Tile(8), Tile(16)],
@@ -55,10 +55,10 @@ def test_move_right_complex_merge_var1(game):
 
     assert get_board_values(game.board) == expected_board
 
-    assert game.score == (36, 16)
+    assert game.score == (36, 36)
 
 
-def test_move_right_complex_merge_var2(game):
+def test_move_right_merge_tiles_var3(game):
     game.reset()
     game._board = [
         [Tile(2), Tile(2), Tile(4), Tile(4)],
@@ -78,7 +78,7 @@ def test_move_right_complex_merge_var2(game):
 
     assert get_board_values(game.board) == expected_board
 
-    assert game.score == (68, 32)
+    assert game.score == (68, 68)
 
 
 def test_move_right_empty_board(game):
