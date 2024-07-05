@@ -76,6 +76,8 @@ class Game:
         self._is_game_over: bool = False
         """Indication of no further possible moves"""
 
+        self._extra_tiles: int = 0
+
     @property
     def board(self) -> list[list[Tile]]:
         return self._board
@@ -97,7 +99,7 @@ class Game:
 
     def move_left(self) -> None:
         for row in range(len(self._board)):
-            extra_tiles: int = 0
+            self._extra_tiles = 0
 
             new_row = [i for i in self._board[row] if i.value != 0]
             if len(new_row) >= 2:
@@ -106,12 +108,12 @@ class Game:
                         new_row[i].value *= 2
                         new_row[i + 1].value = 0
                         self._score.value += new_row[i].value
-                        extra_tiles += 1
-            self._board[row] = [i for i in new_row if i.value != 0] + [Tile(0)] * (self._columns - len(new_row) + extra_tiles)
+                        self._extra_tiles += 1
+            self._board[row] = [i for i in new_row if i.value != 0] + [Tile(0)] * (self._columns - len(new_row) + self._extra_tiles)
 
     def move_right(self) -> None:
         for row in range(len(self._board)):
-            extra_tiles: int = 0
+            self._extra_tiles = 0
 
             new_row = [i for i in self._board[row] if i.value != 0]
             if len(new_row) >= 2:
@@ -120,12 +122,12 @@ class Game:
                         new_row[i].value *= 2
                         new_row[i - 1].value = 0
                         self._score.value += new_row[i].value
-                        extra_tiles += 1
-            self._board[row] = [Tile(0)] * (self._columns - len(new_row) + extra_tiles) + [i for i in new_row if i.value != 0]
+                        self._extra_tiles += 1
+            self._board[row] = [Tile(0)] * (self._columns - len(new_row) + self._extra_tiles) + [i for i in new_row if i.value != 0]
 
     def move_up(self) -> None:
         for col in range(self._columns):
-            extra_tiles: int = 0
+            self._extra_tiles = 0
 
             new_col = [self._board[row][col] for row in range(len(self._board)) if self._board[row][col].value != 0]
             if len(new_col) >= 2:
@@ -134,16 +136,16 @@ class Game:
                         new_col[i].value *= 2
                         new_col[i + 1].value = 0
                         self._score.value += new_col[i].value
-                        extra_tiles += 1
+                        self._extra_tiles += 1
 
-            merged_col = [i for i in new_col if i.value != 0] + [Tile(0)] * (len(self._board) - len(new_col) + extra_tiles)
+            merged_col = [i for i in new_col if i.value != 0] + [Tile(0)] * (len(self._board) - len(new_col) + self._extra_tiles)
 
             for row in range(len(self._board)):
                 self._board[row][col] = merged_col[row]
 
     def move_down(self) -> None:
         for col in range(self._columns):
-            extra_tiles: int = 0
+            self._extra_tiles = 0
 
             new_col = [self._board[row][col] for row in range(len(self._board)) if self._board[row][col].value != 0]
             if len(new_col) >= 2:
@@ -152,9 +154,9 @@ class Game:
                         new_col[i].value *= 2
                         new_col[i - 1].value = 0
                         self._score.value += new_col[i].value
-                        extra_tiles += 1
+                        self._extra_tiles += 1
 
-            merged_col = [Tile(0)] * (len(self._board) - len(new_col) + extra_tiles) + [i for i in new_col if i.value != 0]
+            merged_col = [Tile(0)] * (len(self._board) - len(new_col) + self._extra_tiles) + [i for i in new_col if i.value != 0]
 
             for row in range(len(self._board)):
                 self._board[row][col] = merged_col[row]
