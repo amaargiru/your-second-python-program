@@ -36,6 +36,30 @@ def test_add_random_tile_empty_board(game):
     assert game.score == (0, 0)
 
 
+def test_add_random_tile_almost_empty_board(game):
+    game.reset()
+    game._board = [
+        [Tile(2), Tile(0), Tile(0), Tile(0)],
+        [Tile(0), Tile(2), Tile(0), Tile(0)],
+        [Tile(0), Tile(0), Tile(0), Tile(0)],
+        [Tile(0), Tile(0), Tile(0), Tile(0)]
+    ]
+    num_empty_before = count_empty_tiles(game.board)
+    num_twos_before = count_specific_value_tiles(game.board, 2)
+    num_fours_before = count_specific_value_tiles(game.board, 4)
+
+    game.add_random_tile()
+
+    num_empty_after = count_empty_tiles(game.board)
+    assert num_empty_after == num_empty_before - 1
+
+    num_twos_after = count_specific_value_tiles(game.board, 2)
+    num_fours_after = count_specific_value_tiles(game.board, 4)
+
+    assert num_twos_before + num_fours_before == num_twos_after + num_fours_after - 1
+    assert game.score == (0, 0)
+
+
 # Checks if a random tile is added to a partially filled board and if the board now contains exactly one new tile of value 2 or 4
 def test_add_random_tile_partially_filled_board(game):
     game.reset()

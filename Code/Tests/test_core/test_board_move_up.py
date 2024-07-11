@@ -15,8 +15,22 @@ def get_board_values(board):
 def test_move_up_empty_board(game):
     game.reset()
     game.move_up()
-    expected_board = [[0 for _ in range(4)] for _ in range(4)]
+    expected_board = [[0 for _ in range(game._columns)] for _ in range(game._rows)]
     assert get_board_values(game.board) == expected_board
+
+
+# Checking the uniqueness of board elements
+def test_move_up_check_uniq_ids(game):
+    game.reset()
+    game.move_up()
+
+    # Counting the number of unique elements
+    ids = set()
+    for row in game._board:
+        for item in row:
+            ids.add(item)
+
+    assert len(ids) == game._columns * game._rows
 
 
 def test_move_up_single_tile(game):

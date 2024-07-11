@@ -14,25 +14,23 @@ def get_board_values(board):
 
 def test_move_right_empty_board(game):
     game.reset()
-    game._board = [
-        [Tile(0), Tile(0), Tile(0), Tile(0)],
-        [Tile(0), Tile(0), Tile(0), Tile(0)],
-        [Tile(0), Tile(0), Tile(0), Tile(0)],
-        [Tile(0), Tile(0), Tile(0), Tile(0)]
-    ]
-
     game.move_right()
-
-    expected_board = [
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0]
-    ]
-
+    expected_board = [[0 for _ in range(game._columns)] for _ in range(game._rows)]
     assert get_board_values(game.board) == expected_board
 
-    assert game.score == (0, 0)
+
+# Checking the uniqueness of board elements
+def test_move_right_check_uniq_ids(game):
+    game.reset()
+    game.move_right()
+
+    # Counting the number of unique elements
+    ids = set()
+    for row in game._board:
+        for item in row:
+            ids.add(item)
+
+    assert len(ids) == game._columns * game._rows
 
 
 def test_move_right_single_tile(game):

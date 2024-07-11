@@ -15,8 +15,22 @@ def get_board_values(board):
 def test_move_left_empty_board(game):
     game.reset()
     game.move_left()
-    expected_board = [[0 for _ in range(4)] for _ in range(4)]
+    expected_board = [[0 for _ in range(game._columns)] for _ in range(game._rows)]
     assert get_board_values(game.board) == expected_board
+
+
+# Checking the uniqueness of board elements
+def test_move_left_check_uniq_ids(game):
+    game.reset()
+    game.move_left()
+
+    # Counting the number of unique elements
+    ids = set()
+    for row in game._board:
+        for item in row:
+            ids.add(item)
+
+    assert len(ids) == game._columns * game._rows
 
 
 def test_move_left_single_tile(game):
@@ -33,6 +47,27 @@ def test_move_left_single_tile(game):
     expected_board = [
         [2, 0, 0, 0],
         [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+    ]
+    assert get_board_values(game.board) == expected_board
+    assert game.score == (0, 0)
+
+
+def test_move_left_two_tile(game):
+    game.reset()
+    game._board = [
+        [Tile(0), Tile(2), Tile(0), Tile(0)],
+        [Tile(0), Tile(0), Tile(2), Tile(0)],
+        [Tile(0), Tile(0), Tile(0), Tile(0)],
+        [Tile(0), Tile(0), Tile(0), Tile(0)]
+    ]
+
+    game.move_left()
+
+    expected_board = [
+        [2, 0, 0, 0],
+        [2, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0]
     ]
