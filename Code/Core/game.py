@@ -112,7 +112,8 @@ class Game:
                         new_row[i + 1].value = 0
                         self._local_score += new_row[i].value
                         self._extra_tiles += 1
-            self._board[row] = [i for i in new_row if i.value != 0] + [Tile(0)] * (self._columns - len(new_row) + self._extra_tiles)
+            self._board[row] = ([i for i in new_row if i.value != 0] +
+                                [Tile(0) for _ in range(self._columns - len(new_row) + self._extra_tiles)])
 
         self._score.value += self._local_score
 
@@ -130,7 +131,8 @@ class Game:
                         new_row[i - 1].value = 0
                         self._local_score += new_row[i].value
                         self._extra_tiles += 1
-            self._board[row] = [Tile(0)] * (self._columns - len(new_row) + self._extra_tiles) + [i for i in new_row if i.value != 0]
+            self._board[row] = ([Tile(0) for _ in range(self._columns - len(new_row) + self._extra_tiles)] +
+                                [i for i in new_row if i.value != 0])
 
         self._score.value += self._local_score
 
@@ -149,7 +151,8 @@ class Game:
                         self._local_score += new_col[i].value
                         self._extra_tiles += 1
 
-            merged_col = [i for i in new_col if i.value != 0] + [Tile(0)] * (len(self._board) - len(new_col) + self._extra_tiles)
+            merged_col = ([i for i in new_col if i.value != 0] +
+                          [Tile(0) for _ in range(len(self._board) - len(new_col) + self._extra_tiles)])
 
             for row in range(len(self._board)):
                 self._board[row][col] = merged_col[row]
@@ -171,7 +174,8 @@ class Game:
                         self._local_score += new_col[i].value
                         self._extra_tiles += 1
 
-            merged_col = [Tile(0)] * (len(self._board) - len(new_col) + self._extra_tiles) + [i for i in new_col if i.value != 0]
+            merged_col = ([Tile(0) for _ in range(len(self._board) - len(new_col) + self._extra_tiles)] +
+                          [i for i in new_col if i.value != 0])
 
             for row in range(len(self._board)):
                 self._board[row][col] = merged_col[row]
