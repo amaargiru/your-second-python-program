@@ -1,6 +1,6 @@
 import pytest
 
-from Core.game import Tile
+from Core.tile import Tile
 
 
 def test_initial_value():

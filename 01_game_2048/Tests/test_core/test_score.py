@@ -1,6 +1,6 @@
 import pytest
 
-from Core.game import Score
+from Core.score import Score
 
 
 def test_initial_value():

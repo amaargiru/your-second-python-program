@@ -1,6 +1,6 @@
 from colorama import Fore, Style, init
 
-from Core.game import Tile
+from Core.tile import Tile
 
 init(autoreset=True)
 

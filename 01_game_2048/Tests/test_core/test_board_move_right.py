@@ -1,6 +1,7 @@
 import pytest
 
-from Core.game import Tile, Game
+from Core.game import Game
+from Core.tile import Tile
 
 
 @pytest.fixture

@@ -1,67 +1,7 @@
 import random
 
-
-class Score:
-    """Current score"""
-
-    def __init__(self, value: int):
-        self._value: int = value
-        """The value of the current score"""
-        self._diff: int = value
-        """Score change speed"""
-        # Knowledge of the score change speed can be useful when displaying the score to the player.
-        # For example, high change speed -> successful move -> congratulations with red color
-
-    @property
-    def value(self) -> int:
-        return self._value
-
-    @value.setter
-    def value(self, value):
-        self.validate_value(value)
-
-        self._diff = value - self._value
-        self._value = value
-
-    def validate_value(self, value):
-        if value < 0:
-            raise ValueError("The value of the scored points must be not less than zero.")
-        if value % 2 != 0:
-            raise ValueError("The value of the scored points must be an even number.")
-        if value < self._value:
-            raise ValueError("The value of the scored points should not decrease.")
-
-    @property
-    def diff(self) -> int:
-        return self._diff
-
-
-class Tile:
-    """Single tile"""
-
-    # The tile is separated into a distinct class to allow for further extension. For example, in a console game, it can have a "Color"
-    # property added, in a learning mode, identical tiles located next to each other can be visually highlighted, etc.
-
-    def __init__(self, value: int):
-        self.value: int = value  # Call value setter
-        """The value of the current tile"""
-
-    @property
-    def value(self) -> int:
-        return self._value
-
-    @value.setter
-    def value(self, value):
-        self.validate_value(value)
-
-        self._value = value
-
-    @classmethod
-    def validate_value(cls, value):
-        if value < 0:
-            raise ValueError("The value of the tile must be not less than zero.")
-        if value % 2 != 0:
-            raise ValueError("The value of the tile must be an even number.")
+from Core.score import Score
+from Core.tile import Tile
 
 
 class Game:

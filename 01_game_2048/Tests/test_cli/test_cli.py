@@ -1,7 +1,7 @@
 from colorama import Style, Fore
 
 from CLI.cli import Cli
-from Core.game import Tile
+from Core.tile import Tile
 
 
 def test_pretty_print_board(capsys):
