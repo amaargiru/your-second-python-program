@@ -33,6 +33,10 @@ def on_key_press(key):
         Cli.pretty_print_board(game.board)
         Cli.pretty_print_score(game.score)
 
+        if game.is_game_over:
+            print("Game over!")
+            exit(0)
+
 
 with keyboard.Listener(on_press=on_key_press) as listener:
     listener.join()

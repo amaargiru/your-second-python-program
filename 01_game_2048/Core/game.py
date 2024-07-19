@@ -56,6 +56,7 @@ class Game:
                                 [Tile(0) for _ in range(self._columns - len(new_row) + self._extra_tiles)])
 
         self._score.value += self._local_score
+        self._is_game_over = not self._is_move_possible()
 
     def move_right(self) -> None:
         self._local_score = 0
@@ -75,6 +76,7 @@ class Game:
                                 [i for i in new_row if i.value != 0])
 
         self._score.value += self._local_score
+        self._is_game_over = not self._is_move_possible()
 
     def move_up(self) -> None:
         self._local_score = 0
@@ -98,6 +100,7 @@ class Game:
                 self._board[row][col] = merged_col[row]
 
         self._score.value += self._local_score
+        self._is_game_over = not self._is_move_possible()
 
     def move_down(self) -> None:
         self._local_score = 0
@@ -121,6 +124,7 @@ class Game:
                 self._board[row][col] = merged_col[row]
 
         self._score.value += self._local_score
+        self._is_game_over = not self._is_move_possible()
 
     def add_random_tile(self) -> bool:
         """Add new tile to the board, if possible"""
